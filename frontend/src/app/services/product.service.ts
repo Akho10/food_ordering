@@ -8,7 +8,7 @@ import { Product } from "../models/product";
 })
 export class ProductService{
     
-    private apiUrl= 'http://localhost:8080/api/products';
+    private apiUrl = '/api/products';
 
     constructor(private http:HttpClient){}
 
@@ -40,7 +40,7 @@ export class ProductService{
 
      searchProductsByKeyword(keyword:string): Observable<Product[]>{
 
-        return this.http.get<Product[]>(this.apiUrl + '/search/'+ keyword);
+          return this.http.get<Product[]>(this.apiUrl + '/search/'+ encodeURIComponent(keyword));
     }
     
     //delete

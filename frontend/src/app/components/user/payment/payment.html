@@ -9,4 +9,8 @@
     <p>Total: R{{ total}}</p><br>
     <button (click)="processPayment()">Pay</button>
 </div>
+} @else if (loading) {
+<p>Loading product...</p>
+} @else {
+<p role="alert">{{ loadError }}</p>
 }

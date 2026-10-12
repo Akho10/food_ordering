@@ -14,4 +14,8 @@
     <p>Total: R{{total}}</p><br>
     <button [routerLink]="['/payment',product.id]" [queryParams]="{quantity: quantity}">Continue to Payment</button>
 </div>
+} @else if (loading) {
+<p>Loading product...</p>
+} @else {
+<p role="alert">{{ loadError }}</p>
 }

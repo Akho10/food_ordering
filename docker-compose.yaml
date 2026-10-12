@@ -8,6 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping --protocol=TCP -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD || exit 1"]
       interval: 5s
@@ -16,6 +17,7 @@ services:
       start_period: 30s
 
   api:
+    image: ${DOCKERHUB_NAMESPACE:?Set DOCKERHUB_NAMESPACE}/food-ordering-api:${IMAGE_TAG:-latest}
     build: ./backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}
@@ -24,15 +26,20 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
     expose:
       - "8080"
+    ports:
+      - "127.0.0.1:8081:8080"
 
   frontend:
+    image: ${DOCKERHUB_NAMESPACE:?Set DOCKERHUB_NAMESPACE}/food-ordering-frontend:${IMAGE_TAG:-latest}
     build: ./frontend
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - api
+    restart: unless-stopped
 
 volumes:
   mysql-data:

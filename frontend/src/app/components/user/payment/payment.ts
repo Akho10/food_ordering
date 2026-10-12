@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product';
 import { FormsModule } from '@angular/forms';
@@ -15,11 +15,14 @@ export class Payment implements OnInit{
   product:Product | null = null;
   quantity:number=1;
   total:number=0;
+  loading = true;
+  loadError = '';
 
   constructor(private route:ActivatedRoute,
     private router:Router,
     private productService:ProductService,
-    private orderService:OrderService
+    private orderService:OrderService,
+    private changeDetector:ChangeDetectorRef
 
   ){}
 
@@ -31,6 +34,12 @@ export class Payment implements OnInit{
     this.productService.findProductById(id).subscribe(data =>{
       this.product=data;
       this.total = this.product.price * this.quantity;
+      this.loading = false;
+      this.changeDetector.markForCheck();
+    }, () => {
+      this.loading = false;
+      this.loadError = `Could not load product ${id}. Check that the backend is running and that this product exists in its database.`;
+      this.changeDetector.markForCheck();
     });
   }
 

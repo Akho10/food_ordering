@@ -14,5 +14,8 @@
     <p>Payment Status: {{order.status}}</p>
 
     <p>Your order has been placed!</p>
+} @else if (loading) {
+<p>Loading order...</p>
+} @else {
+<p role="alert">{{ loadError }}</p>
 }
-

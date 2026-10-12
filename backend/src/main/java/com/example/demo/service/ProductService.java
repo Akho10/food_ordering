@@ -41,7 +41,7 @@ public class ProductService {
 	}
 	//search
 	public List<Product> searchProductsByKeyword(String keyword){
-		return productRepository.findByNameContainingIgnoreCase(keyword);
+		return productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
 	}
 	
 	//reduce quantity
