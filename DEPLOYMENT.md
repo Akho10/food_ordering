@@ -35,8 +35,8 @@ Only Nginx is exposed to users. The API and MySQL ports are private to the Docke
 
 Create a Docker Hub account, then create two **public** repositories under it:
 
-- `food-ordering-api`
-- `food-ordering-frontend`
+- `food_ordering_api`
+- `food_ordering_frontend`
 
 Public repositories let EC2 download images without a Docker Hub login. The Jenkins pipeline will publish images with a tag based on the Git commit, for example `a1b2c3d4e5f6`.
 

@@ -27,8 +27,8 @@ pipeline {
         stage('Build images') {
             steps {
                 sh '''
-                    docker build -t "$DOCKERHUB_NAMESPACE/food-ordering-api:$IMAGE_TAG" ./backend
-                    docker build -t "$DOCKERHUB_NAMESPACE/food-ordering-frontend:$IMAGE_TAG" ./frontend
+                    docker build -t "$DOCKERHUB_NAMESPACE/food_ordering_api:$IMAGE_TAG" ./backend
+                    docker build -t "$DOCKERHUB_NAMESPACE/food_ordering_frontend:$IMAGE_TAG" ./frontend
                 '''
             }
         }
@@ -40,8 +40,8 @@ pipeline {
                         set -eu
                         trap 'docker logout >/dev/null 2>&1 || true' EXIT
                         printf '%s' "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USER" --password-stdin
-                        docker push "$DOCKERHUB_NAMESPACE/food-ordering-api:$IMAGE_TAG"
-                        docker push "$DOCKERHUB_NAMESPACE/food-ordering-frontend:$IMAGE_TAG"
+                        docker push "$DOCKERHUB_NAMESPACE/food_ordering_api:$IMAGE_TAG"
+                        docker push "$DOCKERHUB_NAMESPACE/food_ordering_frontend:$IMAGE_TAG"
                     '''
                 }
             }
