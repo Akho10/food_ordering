@@ -8,18 +8,22 @@ pipeline {
 
     environment {
         DOCKERHUB_NAMESPACE = 'liliza'
-        IMAGE_TAG = ''
     }
 
     stages {
         stage('Checkout and configure') {
             steps {
-                checkout scm
                 script {
+                    def checkoutResult = checkout scm
+                    def commit = checkoutResult.GIT_COMMIT
+                    if (!commit) {
+                        error('Could not determine the image tag from the checked-out commit.')
+                    }
+                    env.IMAGE_TAG = commit.take(12)
+                    echo "Using image tag: ${env.IMAGE_TAG}"
                     if (env.DOCKERHUB_NAMESPACE.startsWith('REPLACE_')) {
                         error('Set DOCKERHUB_NAMESPACE in the Jenkinsfile before running the pipeline.')
                     }
-                    env.IMAGE_TAG = sh(script: 'git rev-parse --short=12 HEAD', returnStdout: true).trim()
                 }
             }
         }
@@ -54,8 +58,8 @@ pipeline {
             steps {
                 sh '''
                     set -eu
-                    docker compose -p food-ordering --env-file /opt/food-ordering/.env -f docker-compose.yaml pull api frontend
-                    docker compose -p food-ordering --env-file /opt/food-ordering/.env -f docker-compose.yaml up -d --remove-orphans
+                    IMAGE_TAG="$IMAGE_TAG" docker compose -p food-ordering --env-file /opt/food_ordering/.env -f docker-compose.yaml pull api frontend
+                    IMAGE_TAG="$IMAGE_TAG" docker compose -p food_ordering --env-file /opt/food_ordering/.env -f docker-compose.yaml up -d --remove-orphans
                 '''
             }
         }
