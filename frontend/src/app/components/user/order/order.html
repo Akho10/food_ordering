@@ -1,0 +1,17 @@
+<h2>Place Order</h2>
+
+@if(product) {
+<div>
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description}}</p>
+    <p>Price: R{{ product.price}}</p>
+    <p>Available: {{ product.quantity}}</p>
+
+    <hr>
+    <label>Quanity</label>
+    <input type="number" [(ngModel)]="quantity" (ngModelChange)="calcTotal()" min="1" [max]="product.quantity">
+
+    <p>Total: R{{total}}</p><br>
+    <button [routerLink]="['/payment',product.id]" [queryParams]="{quantity: quantity}">Continue to Payment</button>
+</div>
+}

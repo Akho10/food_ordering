@@ -1,0 +1,20 @@
+<h2>Edit Product</h2>
+<form (ngSubmit)="updateProduct()">
+    <label>Product Name</label>
+    <input type="text" [(ngModel)]="product.name" name="name" required>
+    <br><br>
+    <label>Description</label>
+    <textarea [(ngModel)]="product.description" name="description" required></textarea>
+    <br><br>
+    <label>Price</label>
+    <input type="number" [(ngModel)]="product.price" name="price" required>
+    <br><br>
+    <label>Quantity</label>
+     <input type="number" [(ngModel)]="product.quantity" name="quantity" required>
+    <br><br>
+    <label>Image url</label>
+     <input type="text" [(ngModel)]="product.imageUrl" name="imageUrl">
+    <br><br>
+
+    <button type="submit">Update Product</button>
+</form>

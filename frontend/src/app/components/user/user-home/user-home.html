@@ -1,0 +1,17 @@
+<h2>Search For Food</h2>
+<input type="text" [(ngModel)]="keyword" placeholder="Search for food items...">
+<button (click)="searchProducts()">Search</button>
+ <hr>
+
+
+@for (product of products; track product.id) {
+<div>
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description}}</p>
+    <p>Price: R{{ product.price}}</p>
+    <p>Available: {{ product.quantity}}</p>
+
+    <button [routerLink]="['/order',product.id]">Select</button>
+    <hr>
+</div>
+}

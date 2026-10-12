@@ -1,0 +1,12 @@
+<h2>Payment</h2>
+
+@if(product) {
+<div>
+    <h3>{{ product.name }}</h3>
+    <p>Price: R{{ product.price}}</p>
+    <p>Quantity: {{ quantity}}</p>
+
+    <p>Total: R{{ total}}</p><br>
+    <button (click)="processPayment()">Pay</button>
+</div>
+}

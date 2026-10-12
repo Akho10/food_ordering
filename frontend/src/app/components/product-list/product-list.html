@@ -1,0 +1,16 @@
+<input type="text" [(ngModel)]="keyword" placeholder="Search products">
+<button (click)="searchProducts()">Search</button>
+<h2>Products</h2>
+
+@for (product of products; track product.id) {
+<div>
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description}}</p>
+    <p>Price: R{{ product.price}}</p>
+    <p>Available: {{ product.quantity}}</p>
+
+    <button (click)="deleteProduct(product.id)">Delete</button>
+        <button [routerLink]="['/admin/edit/products',product.id]">Edit</button>
+    <hr>
+</div>
+}
